@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pengembaraan Matematik Tahun 3</title>
+<style>
+:root{--blue:#174ea6;--pale:#eef4ff;--ink:#172033;--muted:#5d6678;--line:#d9e0ec;--green:#137333;--red:#b3261e}
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+header{background:linear-gradient(135deg,#174ea6,#3976d2);color:white;padding:28px 16px 34px}
+.wrap{max-width:850px;margin:auto}.eyebrow{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+h1{font-size:clamp(1.5rem,4vw,2.2rem);line-height:1.2;margin:.45rem 0}.sub{margin:0;opacity:.92}
+main{max-width:850px;margin:-16px auto 40px;padding:0 12px}.panel,.q{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 3px 12px #14264b0b}
+label{display:block;font-weight:700;margin-bottom:7px}.required{color:var(--red)}input[type=text],input[type=number],textarea{width:100%;padding:12px 13px;border:1px solid #aeb9ca;border-radius:10px;font-size:1rem;background:white;color:var(--ink)}
+.q h3{font-size:1rem;margin:0 0 12px}.qnum{color:var(--blue);font-weight:700;margin-right:6px}.opts{display:grid;gap:9px}.opt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-weight:400;margin:0;cursor:pointer}.opt:has(input:checked){background:var(--pale);border-color:var(--blue)}input[type=radio]{margin-top:5px;accent-color:var(--blue)}
+.visual{margin:10px 0 16px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fbfcff;overflow-x:auto}.visual-title{font-weight:700;margin-bottom:10px}.calendar{border-collapse:collapse;width:100%;max-width:560px;text-align:center;font-size:.9rem}.calendar th,.calendar td{border:1px solid #cbd5e1;padding:8px 3px;min-width:28px}.calendar th{background:#eaf1ff}.chart-wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.legend{display:grid;gap:8px}.legend i{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:7px;vertical-align:middle}.hint{font-size:.88rem;color:var(--muted);margin-top:7px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.btn{border:0;border-radius:11px;padding:13px 18px;font-weight:700;font-size:1rem;cursor:pointer}.primary{background:var(--blue);color:white}.secondary{background:#e8edf5;color:var(--ink)}.result{display:none}.certificate{margin:22px 0;padding:28px 20px;text-align:center;border:7px double #e2ad25;border-radius:18px;background:linear-gradient(135deg,#fffdf2,#eef7ff);color:#183153}.cert-stars{font-size:26px;color:#e2ad25;letter-spacing:8px}.certificate h2{font-size:1.65rem;color:#1d4f91;margin:10px 0}.cert-subtitle{font-weight:800;letter-spacing:1px}.certificate h1{font-size:clamp(1.5rem,5vw,2.3rem);overflow-wrap:anywhere;color:#d34b35;border-bottom:2px solid #e2ad25;padding-bottom:10px}.cert-mark-label{font-weight:800;margin-top:20px}.cert-mark{font-size:3rem;font-weight:900;color:#1d4f91}.cert-congrats{font-weight:900;color:#d34b35}.cert-message{font-weight:600}.cert-footer{margin-top:24px;font-style:italic}.review-section{margin:22px 0;padding:16px;border:1px solid var(--line);border-radius:14px;background:#fff}.review-section h3{margin:4px 0 12px}.review-list{display:grid;gap:10px}.review-item{padding:12px;border-radius:10px;border-left:5px solid #94a3b8;background:#f8fafc}.review-item.good{border-left-color:#23934d;background:#f0fbf3}.review-item.bad{border-left-color:#d14343;background:#fff5f5}.review-item.missed{border-left-color:#d97706;background:#fff9ed}.review-question{font-weight:800;margin-bottom:5px}.review-answer{margin-top:5px}.review-empty{color:var(--muted)}.score{font-size:2rem;font-weight:800;color:var(--blue)}.feedback{font-weight:700}.correct{border-color:#8ac99a;background:#f3fbf4}.incorrect{border-color:#e4a19d;background:#fff7f6}.footer{text-align:center;color:var(--muted);font-size:.82rem;padding:12px}
+@media(min-width:650px){main{padding:0 18px}.panel,.q{padding:22px}.opts.cols{grid-template-columns:1fr 1fr}}
+
+.rules{margin:14px auto 0;padding:14px 18px 14px 42px;max-width:620px;text-align:left;
+background:rgba(255,255,255,.88);color:#26324a;border:2px solid rgba(255,255,255,.9);
+border-radius:18px;box-shadow:0 5px 0 rgba(30,40,80,.12);line-height:1.65}
+.rules li{padding:2px 0}
+
+/* Navigasi satu soalan setiap halaman */
+.game-progress{background:#fffdf4;border:2px solid #ffd447;border-radius:16px;padding:14px 16px;margin:14px 0}
+.progress-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:9px;color:#25324a}
+.progress-track{height:13px;background:#e4eaf4;border-radius:999px;overflow:hidden;border:1px solid #cbd5e1}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#2d9b58,#8bd450);border-radius:999px;transition:width .2s}
+.question-nav{align-items:center;justify-content:space-between;background:#fffdf4;padding:12px;border:2px solid #ffd447;border-radius:16px;position:sticky;bottom:8px;box-shadow:0 4px 16px #14264b1c;z-index:5}
+.question-nav .btn{flex:1;min-width:130px}
+.q{display:none;min-height:190px}
+.q.current-question{display:block;animation:popin .18s ease-out}
+@keyframes popin{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+/* Tema platform game ceria: merah, biru langit, kuning dan hijau */
+:root{
+  --bg:#dff5ff;
+  --panel:#fffdf4;
+  --text:#25324a;
+  --muted:#52627b;
+  --primary:#e63946;
+  --accent:#ffd447;
+  --success:#2d9b58;
+}
+body{
+  background:
+    radial-gradient(circle at 12% 9%, rgba(255,212,71,.75) 0 34px, transparent 35px),
+    radial-gradient(circle at 88% 18%, rgba(255,255,255,.95) 0 26px, transparent 27px),
+    linear-gradient(180deg,#9be3ff 0%,#e7f8ff 45%,#c9f4c5 100%) !important;
+  color:#25324a;
+}
+header{
+  background:linear-gradient(135deg,#e63946 0%,#f04b50 48%,#ffcb3d 100%) !important;
+  color:#fff !important;
+  border-bottom:6px solid #2d9b58;
+  border-radius:0 0 28px 28px;
+  box-shadow:0 7px 0 rgba(36,92,61,.15);
+}
+header h1{color:#fff !important;text-shadow:2px 3px 0 rgba(120,25,35,.28);letter-spacing:.02em}
+header .eyebrow{color:#fff8cf !important;font-weight:800}
+header .sub{color:#25324a !important}
+.rules{
+  background:#fffdf4 !important;
+  border:3px solid #ffd447 !important;
+  box-shadow:0 5px 0 rgba(131,91,8,.18) !important;
+}
+.panel,.q{
+  background:rgba(255,253,244,.96) !important;
+  border:2px solid #fff !important;
+  border-radius:20px !important;
+  box-shadow:0 5px 0 rgba(40,105,131,.12) !important;
+}
+button,.btn,input[type=submit]{
+  background:#e63946;
+  border-color:#c92e3a;
+  color:#fff;
+}
+button:hover,.btn:hover,input[type=submit]:hover{filter:brightness(1.05)}
+
+
+.work-label{display:block;font-weight:800;margin:12px 0 6px;color:var(--text)}
+.work-area[hidden]{display:none!important}
+.work-area{display:block;width:100%;min-height:88px;resize:vertical;padding:12px;border:2px dashed #7eb6d9;border-radius:12px;background:#fffef8;color:#25324a;font:inherit;line-height:1.5;box-sizing:border-box;margin-bottom:10px}
+.work-area:focus{outline:3px solid rgba(57,118,210,.2);border-color:#3976d2}
+
+
+.workpad-wrap{margin:8px 0 0}
+.pad-help{font-size:.88rem;color:#52627b;margin:4px 0 8px}
+.workpad{display:block;width:100%;height:210px;border:2px dashed #7eb6d9;border-radius:12px;background:#fffef8;touch-action:none;box-sizing:border-box;cursor:crosshair}
+.pad-controls{display:flex;justify-content:flex-end;margin-top:8px}
+.pad-clear{border:0;border-radius:999px;background:#3976d2;color:#fff;padding:8px 14px;font:inherit;font-size:.88rem;cursor:pointer}
+
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">Pengembaraan Matematik • Tahun 3</div>
+<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><div aria-hidden="true" style="font-size:3.2rem;line-height:1;background:#fffdf4;border:3px solid #ffd447;border-radius:18px;padding:8px 12px;box-shadow:0 4px 0 rgba(131,91,8,.18)">🧭 🪙 ⭐</div><h1>JOM KITA ULANGKAJI!</h1></div>
+<div class="sub">
+  <ol class="rules">
+    <li>Jawab satu soalan pada setiap halaman.</li>
+    <li>Tekan “Seterusnya” untuk meneruskan dan “Sebelum” untuk menyemak semula.</li>
+    <li>Semak peratus markah selepas selesai.</li>
+    <li>Boleh ulang sehingga dapat markah lebih 80%.</li>
+  </ol>
+</div>
+</div></header>
+<main>
+<form id="quiz">
+<section class="panel">
+<label for="student">Nama murid <span class="required">*</span></label>
+<input id="student" name="student" type="text" required placeholder="Taip nama penuh murid">
+
+</section>
+<div class="game-progress" aria-live="polite">
+  <div class="progress-top"><strong id="progressLabel">Soalan 1 daripada 37</strong><span id="progressPercent">3% selesai</span></div>
+  <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+</div>
+<div id="questions"></div>
+<div class="actions question-nav">
+  <button class="btn secondary" type="button" id="prevQuestion">← Sebelum</button>
+  <button class="btn primary" type="button" id="nextQuestion">Seterusnya →</button>
+  <button class="btn primary" type="submit" id="finishQuiz" style="display:none">Tamat &amp; semak markah ✓</button>
+  <button class="btn secondary" type="button" id="reset">Mula semula</button>
+</div>
+</form>
+<section class="panel result" id="result" aria-live="polite">
+<h2>Keputusan latihan</h2><div class="score" id="score"></div><p id="summary"></p>
+<div class="review-section" id="reviewSection"><h3>📚 Semak jawapan dan belajar semula</h3><p>Semak soalan yang betul dan salah. Untuk soalan yang salah atau belum dijawab, jawapan rujukan ditunjukkan supaya murid boleh belajar.</p><div id="reviewCorrect"></div><div id="reviewWrong" style="margin-top:18px"></div><div id="reviewMissed" style="margin-top:18px"></div></div>
+<div id="certificate" class="certificate">
+<div class="cert-stars">⭐ 🧭 ⭐ 🪙 ⭐</div><h2>SIJIL PENCAPAIAN</h2><p class="cert-subtitle">ULANG KAJI MATEMATIK TAHUN 3</p><p>Tahniah kepada</p><h1 id="certName">NAMA MURID</h1><p>kerana telah menyelesaikan latihan ulang kaji Matematik.</p><div class="cert-mark-label">MARKAH DIPEROLEH</div><div class="cert-mark" id="certScore">0%</div><p class="cert-congrats">TAHNIAH, WIRA MATEMATIK! 🎉</p><p class="cert-message">Cuba lagi, buat sendiri dan teruskan usaha sehingga semua jawapan betul!</p><div class="cert-footer">Terus berusaha. Anda pasti boleh! ⭐</div>
+</div>
+<p class="hint">Keputusan ini dipaparkan pada peranti ini sahaja. Jawapan belum dihantar atau disimpan ke Google Sheets.</p>
+<button class="btn primary" type="button" onclick="shareResult()">Kongsi sijil terus</button>
+<button class="btn secondary" type="button" onclick="printCertificate()">Cetak sijil</button>
+</section>
+<div class="footer">Latihan Matematik Tahun 3 • Terus mencuba, pasti berjaya!</div>
+</main>
+<script>
+const qs = [
+{n:1,t:"Tuliskan nombor dalam perkataan: 2 764",a:["dua ribu tujuh ratus enam puluh empat","dua ribu tujuh ratus enam puluh empat."],type:"text",example:"Cara menjawab: Dua ribu tujuh ratus enam puluh empat"},
+{n:2,t:"Cerakinkan mengikut nilai tempat: 7 425",a:["7000+400+20+5","7000 + 400 + 20 + 5","7 000 + 400 + 20 + 5","7,000 + 400 + 20 + 5"],type:"text",example:"Cara menjawab: 3 ribu + 2 ratus + 4 puluh + 6 sa"},
+{n:3,t:"Cerakinkan mengikut nilai digit: 8 163",a:["8000+100+60+3","8000 + 100 + 60 + 3","8 000 + 100 + 60 + 3","8,000 + 100 + 60 + 3"],type:"text",example:"Cara menjawab: 8000 + 100 + 60 + 3"},
+{n:4,t:"Bagi nombor 4 582, nyatakan nilai tempat bagi angka 5.",a:["ratus","ratusan"],type:"text",example:"Cara menjawab: Ribu atau Ratus atau Puluh atau Sa"},
+{n:5,t:"Bagi nombor 4 582, nyatakan nilai digit bagi angka 5.",a:["500","lima ratus"],type:"text",example:"Cara menjawab: 1000 atau 500 atau 70 atau 8"},
+{n:6,t:"846 ______ 792",opts:["Lebih besar daripada","Lebih kurang daripada"],a:["Lebih besar daripada"],type:"radio",},
+{n:7,t:"5792 ______ 692",opts:["Lebih besar daripada","Lebih kurang daripada"],a:["Lebih besar daripada"],type:"radio",},
+{n:8,t:"3 kg = ?",opts:["3 000 g","300 g","30 000 g"],a:["3 000 g"],type:"radio",},
+{n:9,t:"4 kg 50 g = ?",opts:["4 050 g","4 500 g","4 005 g"],a:["4 050 g"],type:"radio",},
+{n:10,t:"6 L 408 mL = ______ mL",a:["6408","6 408","6408 ml","6408ml"],type:"text",},
+{n:11,t:"Berapa peratus petak yang diwarnakan?",a:["99%","99"],type:"text",example:"Cara menjawab: 25%"},
+{n:12,t:"Berapa peratus petak yang diwarnakan?",a:["75%","75"],type:"text",example:"Cara menjawab: 25%"},
+{n:13,t:"126 + 7356 =",a:["7482","7 482"],type:"text",example:"Cara menjawab: 359"},
+{n:14,t:"Cari nombor tertinggal: □ + 2115 = 6743",a:["4628","4 628"],type:"text",example:"Cara menjawab: 230"},
+{n:15,t:"Kira beza antara 5728 dengan 246.",a:["5482","5 482"],type:"text",example:"Cara menjawab: 542"},
+{n:16,t:"0.37 + 0.48 =",a:["0.85"],type:"text",example:"Cara menjawab: 0.55"},
+{n:17,t:"RM6,245.70 + RM285.40 − RM1,280.00 =",a:["RM5,251.10","5251.10","5251.1","rm5251.10","rm 5251.10","5,251.10"],type:"text",example:"Cara menjawab: RM175.50"},
+{n:18,t:"3024 ÷ 8 =",a:["378"],type:"text",example:"Cara menjawab: 216"},
+{n:19,t:"Berdasarkan kalendar Jun 2024, berapakah bilangan hari dalam bulan Jun?",a:["30","30 hari"],type:"text",example:"Cara menjawab: 10 hari"},
+{n:20,t:"Berdasarkan kalendar Jun 2024, apakah hari pertama bulan Jun?",a:["sabtu"],type:"text",example:"Cara menjawab: Sabtu"},
+{n:21,t:"Berdasarkan kalendar Jun 2024, apakah hari terakhir bulan Jun?",a:["ahad","minggu"],type:"text",example:"Cara menjawab: Rabu"},
+{n:22,t:"7 jam 35 minit − 3 jam 20 minit =",a:["4 jam 15 minit","4 jam 15 min","4:15","4 jam 15 minit."],type:"text",example:"Cara menjawab: 1 jam 25 minit"},
+{n:23,t:"8 m = ______ cm",a:["800 cm","800"],type:"text",example:"Cara menjawab: 500 cm"},
+{n:24,t:"248 cm = ______ m ______ cm",a:["2 m 48 cm","2m 48cm","2,48","2 meter 48 sentimeter"],type:"text",example:"Cara menjawab: 1 m 28 cm"},
+{n:25,t:"6500 g = ______ kg ______ g",a:["6 kg 500 g","6kg 500g","6 kilogram 500 gram"],type:"text",example:"Cara menjawab: 3 kg 250 g"},
+{n:26,t:"7 L 725 mL = ______ mL",a:["7725 mL","7725","7 725","7 725 mL"],type:"text",example:"Cara menjawab: 4300 mL"},
+{n:27,t:"9450 g ÷ 5 = ______ kg ______ g",a:["1 kg 890 g","1kg 890g","1 kilogram 890 gram"],type:"text",example:"Cara menjawab: 1 kg 200 g"},
+{n:28,t:"Pentagon mempunyai berapa sisi dan bucu?",opts:["5 sisi / 5 bucu","6 sisi / 6 bucu","7 sisi / 7 bucu","8 sisi / 8 bucu"],a:["5 sisi / 5 bucu"],type:"radio",},
+{n:29,t:"Hexagon mempunyai berapa sisi dan bucu?",opts:["5 sisi / 5 bucu","6 sisi / 6 bucu","7 sisi / 7 bucu","8 sisi / 8 bucu"],a:["6 sisi / 6 bucu"],type:"radio"},
+{n:30,t:"Heptagon mempunyai berapa sisi dan bucu?",opts:["5 sisi / 5 bucu","6 sisi / 6 bucu","7 sisi / 7 bucu","8 sisi / 8 bucu"],a:["7 sisi / 7 bucu"],type:"radio"},
+{n:31,t:"Octagon mempunyai berapa sisi dan bucu?",opts:["5 sisi / 5 bucu","6 sisi / 6 bucu","7 sisi / 7 bucu","8 sisi / 8 bucu"],a:["8 sisi / 8 bucu"],type:"radio"},
+{n:32,t:"Arahan: Jawab soalan 32 hingga 35 berdasarkan carta pai.<br>Safuan menyimpan ______ pada bulan Mei.",a:["RM1,430","rm1430","rm 1430","1430","rm1,430","rm 1,430"],type:"text",example:"Cara menjawab: RM1234"},
+{n:33,t:"Safuan menggunakan RM1,430 untuk ______.",a:["simpanan"],type:"text",example:"Cara menjawab: Simpanan"},
+{n:34,t:"Safuan membelanjakan paling banyak untuk ______.",a:["makanan"],type:"text",example:"Cara menjawab: Keperluan"},
+{n:35,t:"Berapakah jumlah keseluruhan nilai dalam carta pai Safuan pada bulan Mei? RM______.",a:["RM5,880","5880","5 880","5880.00","5,880","rm5880","rm 5,880"],type:"text",example:"Cara menjawab: RM 7330"},
+{n:36,t:"Hafiz ada RM2,475. Mama bagi lagi RM328. Berapakah jumlah wang sekarang?",a:["RM2,803","2803","2 803","rm2803","rm 2,803","rm2,803"],type:"text",example:"Cara menjawab: RM 7330"},
+{n:37,t:"Tan menyiapkan 3 soalan KBAT Matematik. Pusingan 1 = 11 min 46 saat. Pusingan 2 ialah 2 min 15 saat lebih lama daripada pusingan 1. Pusingan 3 ialah 52 saat lebih cepat daripada pusingan 2. Cari masa pusingan ke-3.",a:["13 minit 9 saat","13 min 9 saat","13:09","13 minit 09 saat","13 min 09 saat"],type:"text",example:"Cara menjawab: 12 minit 30 saat"}
+];
+const root=document.getElementById('questions');
+function norm(s){return s.toLowerCase().trim().replace(/[.,]/g,'').replace(/\s+/g,' ').replace(/,/g,'');}
+qs.forEach((q,i)=>{
+ const card=document.createElement('section');card.className='q';card.id='q'+q.n;
+ const h=document.createElement('h3');h.innerHTML=`<span class="qnum">${q.n}.</span>${q.t}`;card.appendChild(h);
+ const visual=document.createElement('div');visual.className='visual';
+ if(q.n===11 || q.n===12){
+  let cells=''; for(let r=0;r<10;r++){for(let c=0;c<10;c++){const shaded=q.n===11 ? !(r===9&&c===9) : (r<7 || (r===7&&c<5));cells+=`<rect x="${c*22}" y="${r*22}" width="21" height="21" fill="${shaded?'#e98ab5':'#fff'}" stroke="#555" stroke-width="0.7"/>`;}}
+  visual.innerHTML=`<div class="visual-title">${q.n===11?'':''}</div><svg viewBox="0 0 220 220" role="img" aria-label="Grid sepuluh kali sepuluh dengan petak berwarna" style="width:min(100%,260px);height:auto;display:block">${cells}</svg>`;
+  card.appendChild(visual);
+ }
+ if(q.n===19 || q.n===20 || q.n===21){
+  visual.innerHTML=`<div class="visual-title">Kalendar Jun 2024</div><table class="calendar"><thead><tr><th>Ahad</th><th>Isnin</th><th>Selasa</th><th>Rabu</th><th>Khamis</th><th>Jumaat</th><th>Sabtu</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td>1</td></tr><tr><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr><tr><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td></tr><tr><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td></tr><tr><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td></tr><tr><td>30</td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>`;
+  card.appendChild(visual);
+ }
+ if(q.n>=32 && q.n<=35){
+  visual.innerHTML=`<div class="visual-title">Perbelanjaan Safuan pada bulan Mei</div><div class="chart-wrap"><svg viewBox="0 0 220 220" role="img" aria-label="Carta pai dengan empat kategori" style="width:min(100%,220px);height:auto"><path d="M110 110 L110 10 A100 100 0 0 1 110 210 Z" fill="#3976d2"/><path d="M110 110 L110 210 A100 100 0 0 1 10 110 Z" fill="#e98ab5"/><path d="M110 110 L10 110 A100 100 0 0 1 45 28 Z" fill="#f5c451"/><path d="M110 110 L45 28 A100 100 0 0 1 110 10 Z" fill="#5eb78a"/></svg><div class="legend"><div><i style="background:#3976d2"></i>Makanan — RM2,850</div><div><i style="background:#e98ab5"></i>Simpanan — RM1,430</div><div><i style="background:#f5c451"></i>Keperluan — RM980</div><div><i style="background:#5eb78a"></i>Lain-lain — RM620</div></div></div>`;
+  card.appendChild(visual);
+ }
+ if(q.type==='radio'){
+  const opts=document.createElement('div');opts.className='opts';
+  q.opts.forEach((o,j)=>{const lab=document.createElement('label');lab.className='opt';lab.innerHTML=`<input type="radio" name="q${q.n}" value="${o}"><span>${o}</span>`;opts.appendChild(lab)});
+  card.appendChild(opts);
+  if(q.example){const ex=document.createElement('p');ex.className='hint';ex.textContent=q.example;card.appendChild(ex)}
+ }else{
+  if([13,14,15,16,17,18,22,35,36,37].includes(q.n)){
+   const workLabel=document.createElement('label');
+   workLabel.className='work-label';
+   workLabel.textContent='Jalan kerja / jalan kira';
+   workLabel.htmlFor='work'+q.n;
+   card.appendChild(workLabel);
+   const padWrap=document.createElement('div');
+   padWrap.className='workpad-wrap';
+   const padHelp=document.createElement('p');
+   padHelp.className='pad-help';
+   padHelp.textContent='Lukis jalan kira menggunakan jari atau tetikus.';
+   padWrap.appendChild(padHelp);
+   const canvas=document.createElement('canvas');
+   canvas.id='workpad'+q.n;
+   canvas.className='workpad';
+   canvas.width=900;
+   canvas.height=260;
+   canvas.setAttribute('aria-label','Papan jalan kira bagi soalan '+q.n);
+   padWrap.appendChild(canvas);
+   const controls=document.createElement('div');
+   controls.className='pad-controls';
+   const clearBtn=document.createElement('button');
+   clearBtn.type='button';
+   clearBtn.className='pad-clear';
+   clearBtn.textContent='Padam jalan kira';
+   controls.appendChild(clearBtn);
+   padWrap.appendChild(controls);
+   card.appendChild(padWrap);
+   const hiddenWork=document.createElement('textarea');
+   hiddenWork.id='work'+q.n;
+   hiddenWork.name='work'+q.n;
+   hiddenWork.hidden=true;
+   hiddenWork.className='work-area';
+   card.appendChild(hiddenWork);
+   const ctx=canvas.getContext('2d');
+   let drawing=false, lastX=0, lastY=0;
+   function fitCanvas(){
+     const dpr=window.devicePixelRatio||1;
+     const rect=canvas.getBoundingClientRect();
+     if(!rect.width) return;
+     const saved=document.createElement('canvas');
+     saved.width=canvas.width; saved.height=canvas.height;
+     saved.getContext('2d').drawImage(canvas,0,0);
+     canvas.width=Math.round(rect.width*dpr);
+     canvas.height=Math.round(210*dpr);
+     ctx.setTransform(dpr,0,0,dpr,0,0);
+     ctx.lineCap='round'; ctx.lineJoin='round'; ctx.lineWidth=3; ctx.strokeStyle='#25324a';
+     ctx.fillStyle='#fffef8'; ctx.fillRect(0,0,rect.width,210);
+     try { ctx.drawImage(saved,0,0,rect.width,210); } catch(e) {}
+   }
+   function coords(e){
+     const rect=canvas.getBoundingClientRect();
+     return {x:e.clientX-rect.left,y:e.clientY-rect.top};
+   }
+   canvas.addEventListener('pointerdown',e=>{
+     e.preventDefault(); drawing=true; canvas.setPointerCapture(e.pointerId);
+     const p=coords(e); lastX=p.x; lastY=p.y;
+     ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(lastX+0.1,lastY+0.1); ctx.stroke();
+   });
+   canvas.addEventListener('pointermove',e=>{
+     if(!drawing) return; e.preventDefault();
+     const p=coords(e); ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(p.x,p.y); ctx.stroke();
+     lastX=p.x; lastY=p.y;
+   });
+   function stopDraw(){drawing=false;}
+   canvas.addEventListener('pointerup',stopDraw);
+   canvas.addEventListener('pointercancel',stopDraw);
+   clearBtn.addEventListener('click',()=>{
+     const rect=canvas.getBoundingClientRect();
+     ctx.clearRect(0,0,canvas.width,canvas.height);
+     ctx.fillStyle='#fffef8'; ctx.fillRect(0,0,rect.width,rect.height);
+   });
+   requestAnimationFrame(fitCanvas);
+   window.addEventListener('resize',fitCanvas);
+  }
+  if(q.example){const ex=document.createElement('p');ex.className='hint';ex.textContent=q.example;card.appendChild(ex)}
+  const inp=document.createElement('input');inp.type='text';inp.name='q'+q.n;inp.autocomplete='off';inp.placeholder='Taip jawapan di sini';inp.setAttribute('aria-label',q.t);card.appendChild(inp);
+ }
+ 
+ const fb=document.createElement('div');fb.className='feedback';fb.style.marginTop='10px';fb.id='fb'+q.n;card.appendChild(fb);
+ root.appendChild(card);
+});
+let currentQuestion=0;
+function showQuestion(index){
+ currentQuestion=Math.max(0,Math.min(index,qs.length-1));
+ qs.forEach((q,i)=>{const card=document.getElementById('q'+q.n);card.classList.toggle('current-question',i===currentQuestion);card.setAttribute('aria-hidden',i===currentQuestion?'false':'true');});
+ const done=currentQuestion+1;
+ document.getElementById('progressLabel').textContent=`Soalan ${done} daripada ${qs.length}`;
+ document.getElementById('progressPercent').textContent=`${Math.round(done/qs.length*100)}% perjalanan`;
+ document.getElementById('progressBar').style.width=`${done/qs.length*100}%`;
+ document.getElementById('prevQuestion').disabled=currentQuestion===0;
+ document.getElementById('prevQuestion').style.opacity=currentQuestion===0?'.5':'1';
+ document.getElementById('nextQuestion').style.display=currentQuestion===qs.length-1?'none':'inline-block';
+ document.getElementById('finishQuiz').style.display=currentQuestion===qs.length-1?'inline-block':'none';
+ document.getElementById('questions').scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('prevQuestion').addEventListener('click',()=>showQuestion(currentQuestion-1));
+document.getElementById('nextQuestion').addEventListener('click',()=>showQuestion(currentQuestion+1));
+showQuestion(0);
+document.getElementById('quiz').addEventListener('submit',e=>{
+ e.preventDefault();let score=0,checked=0,manual=0;
+ const correctItems=[], wrongItems=[], missedItems=[];
+ qs.forEach(q=>{
+  const card=document.getElementById('q'+q.n),fb=document.getElementById('fb'+q.n);
+  card.classList.remove('correct','incorrect');fb.textContent='';
+  const checkedEl=document.querySelector(`[name="q${q.n}"]:checked`);
+  const firstEl=document.querySelector(`[name="q${q.n}"]`);
+  const el=checkedEl || (firstEl && firstEl.type!=='radio' ? firstEl : null);
+  const val=el?el.value:'';
+  if(!val.trim()){
+   fb.innerHTML='Belum dijawab. <span style="font-weight:400">Jawapan betul: <strong>'+q.a[0]+'</strong></span>';
+   fb.style.color='var(--red)';
+   missedItems.push({q, given:'Belum dijawab'});
+   return;
+  }
+  if(q.manual){
+   manual++;
+   fb.innerHTML='Perlu semakan guru. <span style="font-weight:400">Jawapan rujukan yang dijangka: <strong>'+q.a[0]+'</strong></span>';
+   fb.style.color='var(--muted)';
+   wrongItems.push({q, given:val, manual:true});
+   return;
+  }
+  checked++;
+  const ok=q.a.some(a=>norm(a)===norm(val));
+  if(ok){
+   score++;
+   card.classList.add('correct');
+   fb.textContent='Betul ✓';
+   fb.style.color='var(--green)';
+   correctItems.push({q, given:val});
+  } else {
+   card.classList.add('incorrect');
+   fb.innerHTML='Salah ✗ <span style="font-weight:400">Jawapan betul: <strong>'+q.a[0]+'</strong></span>';
+   fb.style.color='var(--red)';
+   wrongItems.push({q, given:val});
+  }
+ });
+ function renderReview(targetId,title,items,kind,emptyText){
+   const target=document.getElementById(targetId); target.replaceChildren();
+   const heading=document.createElement('h4'); heading.textContent=title; target.appendChild(heading);
+   if(!items.length){const p=document.createElement('p');p.className='review-empty';p.textContent=emptyText;target.appendChild(p);return;}
+   const list=document.createElement('div');list.className='review-list';
+   items.forEach(({q,given,manual})=>{
+     const item=document.createElement('div');item.className='review-item '+kind;
+     const question=document.createElement('div');question.className='review-question';question.textContent='Soalan '+q.n+': '+q.t;item.appendChild(question);
+     const your=document.createElement('div');your.className='review-answer';your.textContent='Jawapan murid: '+given;item.appendChild(your);
+     if(kind!=='good'){
+       const answer=document.createElement('div');answer.className='review-answer';answer.innerHTML='<strong>Jawapan rujukan: </strong>';
+       const answerText=document.createElement('span');answerText.textContent=q.a[0];answer.appendChild(answerText);item.appendChild(answer);
+       if(manual){const note=document.createElement('div');note.className='review-empty';note.textContent='Soalan ini perlu disemak oleh guru.';item.appendChild(note);}
+     } else {
+       const note=document.createElement('div');note.className='review-answer';note.textContent='Bagus! Teruskan usaha.';item.appendChild(note);
+     }
+     list.appendChild(item);
+   });
+   target.appendChild(list);
+ }
+ renderReview('reviewCorrect','✅ Soalan yang dijawab betul ('+correctItems.length+')',correctItems,'good','Belum ada jawapan betul. Teruskan berlatih!');
+ renderReview('reviewWrong','❌ Soalan yang dijawab salah ('+wrongItems.length+')',wrongItems,'bad','Syabas! Tiada jawapan salah.');
+ renderReview('reviewMissed','📝 Soalan yang belum dijawab ('+missedItems.length+')',missedItems,'missed','Semua soalan telah dijawab.');
+ const result=document.getElementById('result');result.style.display='block';
+ const totalDinilai=qs.length-manual;const peratus=totalDinilai>0?Math.round(score/totalDinilai*100):0;document.getElementById('score').textContent=`${peratus}%`; 
+ document.getElementById('summary').textContent=`Nama: ${document.getElementById('student').value}. Jawapan betul: ${score}/${totalDinilai}.`;
+ document.getElementById('certName').textContent=document.getElementById('student').value.trim();document.getElementById('certScore').textContent=`${peratus}%`;
+ result.scrollIntoView({behavior:'smooth',block:'start'});
+});
+function printCertificate(){
+ const cert=document.getElementById('certificate');
+ const win=window.open('','_blank');
+ if(!win){alert('Benarkan pop-up untuk mencetak sijil.');return;}
+ win.document.write('<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sijil Pencapaian</title><style>body{font-family:Arial,sans-serif;margin:0;padding:20px;background:white}.certificate{max-width:900px;margin:20px auto;padding:35px 25px;text-align:center;border:8px double #e2ad25;border-radius:18px;background:linear-gradient(135deg,#fffdf2,#eef7ff);color:#183153;box-sizing:border-box}.cert-stars{font-size:26px;color:#e2ad25;letter-spacing:8px}.certificate h2{font-size:30px;color:#1d4f91;margin:10px 0}.cert-subtitle{font-weight:800;letter-spacing:1px}.certificate h1{font-size:34px;overflow-wrap:anywhere;color:#d34b35;border-bottom:2px solid #e2ad25;padding-bottom:10px}.cert-mark-label{font-weight:800;margin-top:20px}.cert-mark{font-size:54px;font-weight:900;color:#1d4f91}.cert-congrats{font-weight:900;color:#d34b35}.cert-message{font-weight:600}.cert-footer{margin-top:24px;font-style:italic}@media print{body{padding:0}.certificate{margin:0 auto;min-height:90vh;display:flex;flex-direction:column;justify-content:center;break-inside:avoid}}</style></head><body>'+cert.outerHTML+'</body></html>');
+ win.document.close();win.focus();setTimeout(()=>win.print(),400);
+}
+function shareResult(){
+ const name=document.getElementById('student').value.trim();
+ if(!name){alert('Sila masukkan nama murid dan semak jawapan dahulu.');return;}
+ const score=document.getElementById('certScore').textContent;
+ const message=`SIJIL PENCAPAIAN MATEMATIK TAHUN 3\nNama: ${name}\nMarkah diperoleh: ${score}\nTahniah, wira Matematik! Cuba lagi dan buat sendiri sehingga semua jawapan betul!`;
+ // Hasilkan sijil sebagai imej terus dalam pelayar, tanpa memerlukan murid memuat turun fail.
+ const canvas=document.createElement('canvas'); canvas.width=1200; canvas.height=850;
+ const ctx=canvas.getContext('2d');
+ const grad=ctx.createLinearGradient(0,0,1200,850); grad.addColorStop(0,'#fffbea'); grad.addColorStop(1,'#dff5ff');
+ ctx.fillStyle=grad;ctx.fillRect(0,0,1200,850);
+ ctx.strokeStyle='#e2ad25';ctx.lineWidth=18;ctx.strokeRect(25,25,1150,800);ctx.lineWidth=5;ctx.strokeRect(45,45,1110,760);
+ // Hiasan pengembaraan platform: awan, syiling dan lencana dan syiling kartun ringkas.
+ function coin(x,y,r){ctx.fillStyle='#ffd447';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e2ad25';ctx.lineWidth=5;ctx.stroke();ctx.fillStyle='#fff3a6';ctx.fillRect(x-r*.18,y-r*.55,r*.36,r*1.1);}
+ function cloud(x,y){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,28,0,Math.PI*2);ctx.arc(x+30,y-15,36,0,Math.PI*2);ctx.arc(x+65,y,28,0,Math.PI*2);ctx.fill();}
+ cloud(120,115);cloud(1040,130);coin(180,220,35);coin(1020,220,35);
+ // Watak wira platform asli bergaya kartun
+ ctx.fillStyle='#e63946';ctx.beginPath();ctx.arc(600,145,52,Math.PI,Math.PI*2);ctx.lineTo(652,150);ctx.lineTo(548,150);ctx.fill();
+ ctx.fillStyle='#ffd7ad';ctx.beginPath();ctx.arc(600,175,42,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#3b2b27';ctx.beginPath();ctx.ellipse(600,194,27,13,0,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#174ea6';ctx.fillRect(557,220,86,58);ctx.fillStyle='#e63946';ctx.fillRect(548,218,104,22);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(572,239,7,0,Math.PI*2);ctx.arc(628,239,7,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#183153';ctx.font='bold 30px Arial';ctx.textAlign='center';ctx.fillText('SYABAS! PENGEMBARAAN MATEMATIK SELESAI',600,330);
+ ctx.fillStyle='#1d4f91';ctx.font='bold 52px Arial';ctx.fillText('SIJIL PENCAPAIAN',600,405);
+ ctx.fillStyle='#25324a';ctx.font='bold 27px Arial';ctx.fillText('ULANG KAJI MATEMATIK TAHUN 3',600,455);
+ ctx.font='26px Arial';ctx.fillText('Dianugerahkan kepada',600,515);
+ ctx.fillStyle='#d34b35';ctx.font='bold 48px Arial';
+ let displayName=name;while(ctx.measureText(displayName).width>930&&displayName.length>8)displayName=displayName.slice(0,-2)+'…';
+ ctx.fillText(displayName,600,575);
+ ctx.fillStyle='#25324a';ctx.font='bold 26px Arial';ctx.fillText('MARKAH DIPEROLEH',600,635);
+ ctx.fillStyle='#1d4f91';ctx.font='bold 70px Arial';ctx.fillText(score,600,710);
+ ctx.fillStyle='#d34b35';ctx.font='bold 23px Arial';ctx.fillText('TAHNIAH! Cuba lagi dan buat sendiri sehingga semua jawapan betul!',600,765);
+ canvas.toBlob(async blob=>{
+   if(!blob){alert('Sijil tidak dapat disediakan. Sila cuba sekali lagi.');return;}
+   const file=new File([blob],`Sijil-${name.replace(/[^a-z0-9]/gi,'-')}.png`,{type:'image/png'});
+   try{
+     if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+       await navigator.share({title:'Sijil Pencapaian Matematik Tahun 3',text:message,files:[file]});
+     } else if(navigator.share){
+       await navigator.share({title:'Sijil Pencapaian Matematik Tahun 3',text:message});
+       alert('Peranti ini tidak menyokong perkongsian imej sijil terus. Keputusan teks telah dikongsi; cuba gunakan telefon untuk berkongsi sijil bergambar.');
+     } else if(navigator.clipboard){
+       await navigator.clipboard.writeText(message);
+       alert('Pelayar ini tidak menyokong perkongsian sijil bergambar terus. Maklumat keputusan disalin untuk ditampal ke WhatsApp. Untuk kongsi sijil sebagai gambar, buka latihan menggunakan telefon.');
+     } else { alert(message); }
+   }catch(err){ if(err && err.name!=='AbortError') alert('Perkongsian tidak berjaya. Cuba buka latihan pada telefon dan tekan “Kongsi sijil terus”.'); }
+ },' image/png'.trim());
+}
+document.getElementById('reset').addEventListener('click',function(){
+  // Mulakan semula secara menyeluruh: kosongkan jawapan, maklum balas, keputusan dan papan jalan kira.
+  const form=document.getElementById('quiz');
+  form.reset();
+  form.querySelectorAll('input[type="text"]').forEach(el=>{el.value='';});
+  form.querySelectorAll('input[type="radio"]').forEach(el=>{el.checked=false;});
+  qs.forEach(q=>{
+    const card=document.getElementById('q'+q.n);
+    const fb=document.getElementById('fb'+q.n);
+    if(card) card.classList.remove('correct','incorrect');
+    if(fb){fb.textContent='';fb.removeAttribute('style');fb.className='feedback';fb.style.marginTop='10px';}
+    const work=document.getElementById('work'+q.n);
+    if(work) work.value='';
+    const canvas=document.querySelector('#q'+q.n+' canvas.workpad');
+    if(canvas){const ctx=canvas.getContext('2d');if(ctx)ctx.clearRect(0,0,canvas.width,canvas.height);}
+  });
+  document.getElementById('result').style.display='none';
+  document.getElementById('score').textContent='';
+  document.getElementById('summary').textContent='';
+  ['reviewCorrect','reviewWrong','reviewMissed'].forEach(id=>document.getElementById(id).replaceChildren());
+  document.getElementById('certName').textContent='NAMA MURID';
+  document.getElementById('certScore').textContent='0%';
+  showQuestion(0);
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+</script>
+</body>
+</html>
